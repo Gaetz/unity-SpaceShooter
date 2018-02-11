@@ -12,9 +12,13 @@ public class PlayerController : MonoBehaviour {
 
     public float speed;
     public float tilt;
+    public float fireRate;
     public Boundary boundary;
+    public GameObject shot;
+    public Transform shotSpawn;
 
     private Rigidbody rbody;
+    private float nextFire;
 
     private void Start()
     {
@@ -37,4 +41,11 @@ public class PlayerController : MonoBehaviour {
         rbody.rotation = Quaternion.Euler(0f, 0f, rbody.velocity.x * -tilt);
     }
 
+    private void Update()
+    {
+        if(Input.GetButton("Fire1") && Time.time > nextFire)  {
+            nextFire = Time.time + fireRate;
+            GameObject clone = Instantiate(shot, shotSpawn.position, shotSpawn.rotation) as GameObject;
+        }
+    }
 }
